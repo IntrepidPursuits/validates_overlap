@@ -117,8 +117,8 @@ class OverlapValidator < ActiveModel::EachValidator
   # Return the condition string depend on exclude_edges option.
   def condition_string(starts_at_attr, ends_at_attr)
     except_option = Array(options[:exclude_edges]).map(&:to_s)
-    starts_at_sign = except_option.include?(starts_at_attr.to_s.split(".").last) ? "<" : "<="
-    ends_at_sign = except_option.include?(ends_at_attr.to_s.split(".").last) ? ">" : ">="
+    starts_at_sign = except_option.include?(starts_at_attr.to_s.split(".").last) ? "=<" : "<"
+    ends_at_sign = except_option.include?(ends_at_attr.to_s.split(".").last) ? ">=" : ">"
     query = []
     query << "(#{ends_at_attr} IS NULL OR #{ends_at_attr} #{ends_at_sign} :starts_at_value)"
     query << "(#{starts_at_attr} IS NULL OR #{starts_at_attr} #{starts_at_sign} :ends_at_value)"
